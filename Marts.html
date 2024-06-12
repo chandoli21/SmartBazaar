@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bazaar</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      padding-bottom: 120px; /* Added padding to accommodate the nav bar */
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .search-container {
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      padding: 5px;
+    }
+
+    #searchInput {
+      background-color: white;
+      padding: 10px;
+      font-size: medium;
+      text-align: left;
+      width: 100%;
+      border: none;
+    }
+
+    .logo {
+      border-radius: 15px;
+      padding: 20px;
+      width: 160px;
+      height: 90px; 
+      margin: 0 auto;
+      display: block;
+    }
+
+    .market, .food-store {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .market-item, .food-store-item {
+      width: calc(30% - 20px);
+      margin: 10px;
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+
+    .market-item:hover, .food-store-item:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-container {
+      padding-bottom: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .market-item img, .food-store-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .market-details, .food-store-details {
+      padding: 15px;
+    }
+
+    .market-details h3, .food-store-details h3 {
+      font-size: 1.2rem;
+      color: black;
+      margin: 0;
+    }
+
+    .market-details p, .food-store-details p {
+      font-size: 1rem;
+      color: gray;
+      margin: 5px 0 0;
+    }
+
+    .market-item a, .food-store-item a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .market-item a:hover, .food-store-item a:hover {
+      text-decoration: none;
+    }
+
+    .category-header {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .no-result {
+      text-align: center;
+      font-size: 1.2rem;
+      color: gray;
+      display: none;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    @media screen and (max-width: 1200px) {
+      .container {
+        padding: 10px;
+        padding-bottom: 120px;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      .market-item, .food-store-item {
+        width: calc(45% - 20px);
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .market-item, .food-store-item {
+        width: calc(100% - 20px);
+      }
+    }
+
+    .description-container {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      background-color: #f3f3f3;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-image {
+      width: 100px;
+      height: 100px;
+      margin-right: 15px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .description-text {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .description-text p {
+      margin: 0;
+      font-size: 1rem;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo -->
+    <img src="./SmartBazaar.png" alt="Logo" class="logo">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <input type="text" id="searchInput" placeholder="Search">
+    </div>
+    
+    <!-- Category Header for Markets -->
+    <div class="category-header"></div>
+    <div class="no-result" id="noMarketResult">No result</div>
+
+    <!-- Market items -->
+    <div class="market" id="marketContainer">
+      <div class="market-item">
+        <a href="./Asian Mart.html">
+          <div class="image-container">
+            <img src="./Asian Mart.jpg" alt="Asian Mart">
+          </div>
+          <div class="market-details">
+            <h3>Asian Mart</h3> 
+            <p>★ 4.39 (963 Reviews)</p>
+            <p>· Asian Grocery Store</p>
+            <p>· Delivery Available</p>
+            <p>· Near Itaewon Stn.</p> 
+          </div>
+        </a>
+      </div>
+
+      <div class="market-item">
+        <a href="./Foreign Food Mart.html">
+          <div class="image-container">
+            <img src="./Foreign Food Mart.jpg" alt="Foreign Food Mart">
+          </div>
+          <div class="market-details">
+            <h3>Foreign Food Mart</h3> 
+            <p>★ 4.2 (1,311 Reviews)</p>
+            <p>· Bangladeshi Grocery Store</p>
+            <p>· Delivery Available</p>
+            <p>· Near Itaewon Stn.</p> 
+          </div>
+        </a>
+      </div>
+
+      <div class="market-item">
+        <a href="./National Foods Mart.html">
+          <div class="image-container">
+            <img src="./National Foods Mart.jpg" alt="National Foods Mart">
+          </div>
+          <div class="market-details">
+            <h3>National Foods Mart</h3> 
+            <p>★ 4.27 (24 Reviews) 
+            <p>· Delivery Available</p>
+            <p>· Near Itaewon Stn.</p> 
+          </div>
+        </a>
+      </div>
+
+      <div class="market-item">
+        <a href="./Masjid Noor.html">
+          <div class="image-container">
+            <img src="./Masjid Noor.jpg" alt="Masjid Noor">
+          </div>
+          <div class="market-details">
+            <h3>Masjid Noor</h3> 
+            <p>★ 4.8 (21 Reviews) · Pick-up only</p>
+            <p>· 서울특별시 광진구 동일로 56길 11 1F</p> 
+            <p>· Pick-up Only</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- <div class="market-item">
+        <a href="./Asian Mart.html">
+          <div class="image-container">
+            <img src="./Asian Mart/Asian Mart.jpg" alt="Asian Mart">
+          </div>
+          <div class="market-details">
+            <h3>Asian Mart</h3> 
+            <p>⭐ 4.9 (48 Reviews) · Pick-up only · </p> 
+          </div>
+        </a>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='./index.html'">
+      <img src="Home.jpg" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="focusSearch()">
+      <img src="./Search.jpg" alt="Search">
+      <span>Search</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='./Cart.html'">
+      <img src="./Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='./My Bazaar.html'">
+      <img src="./My Bazaar.jpg" alt="My Bazaar">
+      <span>My Bazaar</span>
+    </div>
+  </div>
+
+  <script>
+    // Get input element
+    let searchInput = document.getElementById('searchInput');
+    let noMarketResult = document.getElementById('noMarketResult');
+    let marketContainer = document.getElementById('marketContainer');
+
+    // Hide no result messages initially
+    noMarketResult.style.display = 'none';
+
+    // Add event listener
+    searchInput.addEventListener('input', function() {
+      let filter = searchInput.value.toUpperCase();
+
+      // Search Markets
+      let markets = marketContainer.querySelectorAll('.market-item');
+      let marketsVisible = false;
+      markets.forEach(function(market) {
+        let title = market.querySelector('.market-details h3').innerText.toUpperCase();
+        if (title.indexOf(filter) > -1) {
+          market.style.display = '';
+          marketsVisible = true;
+        } else {
+          market.style.display = 'none';
+        }
+      });
+      noResult.style.display = marketsVisible ? 'none' : 'block';
+    });
+
+    // Function to focus on the search input
+    function focusSearch() {
+      searchInput.focus();
+    }
+  </script>
+
+
+</body>
+</html>

@@ -247,16 +247,12 @@
 </head>
 <body>
   <div class="container">
-    <!-- Logo -->
-    <img src="./Masjid Noor.jpg" alt="Logo" class="logo">
     <!-- <h1>MTM's Kitchen</h1> -->
     <div class="search-container">
       <!-- Search Bar -->
-      <input type="text" id="searchInput" placeholder="Search by food item...">
+      <input type="text" id="searchInput" placeholder="Search">
     </div>
     <!-- Food items -->
-    <!-- Category Header for Food -->
-    <div class="category-header">Curry</div>
     <div class="no-result" id="noFoodResult">No result</div>
 
     <!-- Food items -->
@@ -397,52 +393,36 @@
     let searchInput = document.getElementById('searchInput');
     let noFoodResult = document.getElementById('noFoodResult');
     let foodContainer = document.getElementById('foodContainer');
-    let noDrinkResult = document.getElementById('noDrinkResult');
-    let drinkContainer = document.getElementById('drinkContainer');
-
+  
     // Hide no result messages initially
     noFoodResult.style.display = 'none';
-    noDrinkResult.style.display = 'none';
-
+  
     // Add event listener
     searchInput.addEventListener('input', function() {
       let filter = searchInput.value.toUpperCase();
-      let foods = foodContainer.querySelectorAll('.food-item');
-      let drinks = drinkContainer.querySelectorAll('.food-item');
+      let foodItems = document.querySelectorAll('.food-item');
       
-      let foodsVisible = false;
-      let drinksVisible = false;
-
-      foods.forEach(function(food) {
-        let title = food.querySelector('.food-details h3').innerText.toUpperCase();
+      let itemsVisible = false;
+  
+      foodItems.forEach(function(item) {
+        let title = item.querySelector('.food-details h3').innerText.toUpperCase();
         if (title.indexOf(filter) > -1) {
-          food.style.display = '';
-          foodsVisible = true;
+          item.style.display = '';
+          itemsVisible = true;
         } else {
-          food.style.display = 'none';
+          item.style.display = 'none';
         }
       });
-
-      drinks.forEach(function(drink) {
-        let title = drink.querySelector('.food-details h3').innerText.toUpperCase();
-        if (title.indexOf(filter) > -1) {
-          drink.style.display = '';
-          drinksVisible = true;
-        } else {
-          drink.style.display = 'none';
-        }
-      });
-
+  
       // Update visibility of no result messages
-      noFoodResult.style.display = foodsVisible ? 'none' : 'block';
-      noDrinkResult.style.display = drinksVisible ? 'none' : 'block';
+      noFoodResult.style.display = itemsVisible ? 'none' : 'block';
     });
     
     // Function to focus on the search input
     function focusSearch() {
       searchInput.focus();
     }
-
+  
     // Function to change quantity
     function changeQty(button, delta) {
       event.preventDefault();
@@ -451,7 +431,7 @@
       if (newQty < 1) newQty = 1;
       input.value = newQty;
     }
-
+  
     // Function to add item to cart
     function addToCart(button) {
       event.preventDefault();
@@ -461,7 +441,7 @@
       let price = parseInt(priceText.replace('₩', '').replace(',', ''));
       let qty = parseInt(foodItem.querySelector('.qty-input').value);
       let image = foodItem.querySelector('img').src;
-
+  
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       
       let existingItemIndex = cart.findIndex(item => item.title === title);
@@ -474,8 +454,9 @@
       localStorage.setItem('cart', JSON.stringify(cart));
       console.log(`Added to cart: ${title}, ${priceText}, Qty: ${qty}`);
     }
-
+  
   </script>
+  
 
 </body>
 </html>
