@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery - Smart Bazaar</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .payment-methods {
+      margin-top: 20px;
+    }
+
+    .payment-method {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: grey;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Payment Methods</h1>
+    <div class="payment-methods">
+      <div class="payment-method">Credit Card</div>
+      <div class="payment-method">Debit Card</div>
+      <div class="payment-method">PayPal</div>
+      <div class="payment-method">Apple Pay</div>
+      <div class="payment-method">Google Pay</div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='Homepage.html'">
+      <img src="./Home.jpg" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='Cart.html'">
+      <img src="./Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='My Bazaar.html'">
+      <img src="./My Bazaar.jpg" alt="My Bazaar">
+      <span>My Bazaar</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bazaar - Kebabshi</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+  
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+      padding-bottom: 120px; /* Adjusted for bottom navigation bar */
+    }
+  
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    } 
+  
+    .search-container {
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      padding: 5px;
+    }
+
+    #searchInput {
+      background-color: white;
+      padding: 10px;
+      font-size: medium;
+      text-align: left;
+      width: 100%;
+      border: none;
+    }
+
+    .logo {
+      padding: 10px;
+      height: 90px;
+      width: 160px;
+      margin: 0 auto;
+      display: block;
+    }
+  
+    .food {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content:left;
+    }
+  
+    .food-item {
+      width: calc(15% - 20px);
+      margin-top: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+  
+    .food-item:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  
+    .image-container {
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+    }
+  
+    .food-item img {
+      position: absolute;
+      top: 10%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #f3f3f3;
+    }
+  
+    .food-details {
+      text-align: center;
+      padding: 10px;
+    }
+  
+    .food-details h3 {
+      font-size: 1rem;
+      color: black;
+    }
+  
+    .food-details p {
+      font-size: 10pt;
+      color: gray;
+    }
+  
+    .qty-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+  
+    .qty-button {
+      background-color: #ddd;
+      border-radius: 5px;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  
+    .qty-input {
+      background-color: #f3f3f3;
+      width: 40px;
+      text-align: center;
+      border: none;
+      font-size: 16px;
+      margin: 0 5px;
+    }
+  
+    .add-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: green;
+      color: white;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .add-button:hover {
+      background-color:darkgreen;
+    }  
+
+    .qty-button:hover {
+      background-color: darkgrey;
+    }
+  
+    .food-item a {
+      text-decoration: none;
+    }
+  
+    .food-item a:hover {
+      text-decoration: none;
+    }
+  
+    .category-header {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    .no-result {
+      text-align: center;
+      font-size: 1.2rem;
+      color: gray;
+      display: none;
+    }
+  
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+  
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+    
+    @media screen and (max-width: 1200px) {
+      .container {
+        padding: 10px;
+        padding-bottom: 120px;
+      }
+    }
+  
+    @media screen and (max-width: 1000px) {
+      .food-item {
+        width: calc(25% - 20px);
+      }
+    }
+  
+    @media screen and (max-width: 700px) {
+      .food-item {
+        width: calc(33.33% - 20px);
+      }
+    }
+  
+    @media screen and (max-width: 500px) {
+      .food-item {
+        width: calc(50% - 20px);
+      }
+  
+      #searchInput {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo -->
+    <img src="./Kebabshi page logo.jpg" alt="Logo" class="logo">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <input type="text" id="searchInput" placeholder="Search by food item...">
+    </div>
+    
+    <!-- Category Header for Food -->
+    <div class="category-header">Cuisines</div>
+    <div class="no-result" id="noFoodResult">No result</div>
+
+    <!-- Food items -->
+    <div class="food" id="foodContainer">
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Cheese Sticks.png" alt="Cheese Sticks">
+          </div>
+          <div class="food-details">
+            <h3>Cheese Sticks</h3>
+            <p>₩4,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Fries.png" alt="Fries">
+          </div>
+          <div class="food-details">
+            <h3>Fries</h3>
+            <p>₩3,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Jumbo Kebab.png" alt="Jumbo Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Jumbo Kebab</h3> 
+            <p>₩8,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Rice Kebab.png" alt="Rice Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Rice Kebab</h3>
+            <p>₩9,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Rice Tortilla Kebab.png" alt="Rice Tortilla Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Rice Tortilla Kebab</h3>
+            <p>₩7,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Toast Kebab.png" alt="Toast Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Toast Kebab</h3>
+            <p>₩8,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+    </div>
+
+    <!-- Category Header for Drinks -->
+    <div class="category-header">Drinks</div>
+    <div class="no-result" id="noDrinkResult">No result</div>
+
+    <!-- Drink items -->
+    <div class="food" id="drinkContainer">
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Sprite.png" alt="Sprite">
+          </div>
+          <div class="food-details">
+            <h3>Sprite (355mL)</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Coca Cola.png" alt="Coca Cola">
+          </div>
+          <div class="food-details">
+            <h3>Coca Cola (355mL)</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Coca cola zero.png" alt="Coca Cola Zero">
+          </div>
+          <div class="food-details">
+            <h3>Coca Cola Zero (355mL)</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='Homepage.html'">
+      <img src="Home.jpg" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="focusSearch()">
+      <img src="Search.jpg" alt="Search">
+      <span>Search</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='Cart.html'">
+      <img src="Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='My Bazaar.html'">
+      <img src="My Bazaar.jpg" alt="My Bazaar">
+      <span>My Bazaar</span>
+    </div>
+  </div>
+
+  <script>
+    // Get input element
+    let searchInput = document.getElementById('searchInput');
+    let noFoodResult = document.getElementById('noFoodResult');
+    let foodContainer = document.getElementById('foodContainer');
+    let noDrinkResult = document.getElementById('noDrinkResult');
+    let drinkContainer = document.getElementById('drinkContainer');
+
+    // Hide no result messages initially
+    noFoodResult.style.display = 'none';
+    noDrinkResult.style.display = 'none';
+
+    // Add event listener
+    searchInput.addEventListener('input', function() {
+      let filter = searchInput.value.toUpperCase();
+      let foods = foodContainer.querySelectorAll('.food-item');
+      let drinks = drinkContainer.querySelectorAll('.food-item');
+      
+      let foodsVisible = false;
+      let drinksVisible = false;
+
+      foods.forEach(function(food) {
+        let title = food.querySelector('.food-details h3').innerText.toUpperCase();
+        if (title.indexOf(filter) > -1) {
+          food.style.display = '';
+          foodsVisible = true;
+        } else {
+          food.style.display = 'none';
+        }
+      });
+
+      drinks.forEach(function(drink) {
+        let title = drink.querySelector('.food-details h3').innerText.toUpperCase();
+        if (title.indexOf(filter) > -1) {
+          drink.style.display = '';
+          drinksVisible = true;
+        } else {
+          drink.style.display = 'none';
+        }
+      });
+
+      // Update visibility of no result messages
+      noFoodResult.style.display = foodsVisible ? 'none' : 'block';
+      noDrinkResult.style.display = drinksVisible ? 'none' : 'block';
+    });
+    
+    // Function to focus on the search input
+    function focusSearch() {
+      searchInput.focus();
+    }
+
+    // Function to change quantity
+    function changeQty(button, delta) {
+      event.preventDefault();
+      let input = button.parentElement.querySelector('.qty-input');
+      let newQty = parseInt(input.value) + delta;
+      if (newQty < 1) newQty = 1;
+      input.value = newQty;
+    }
+
+    // Function to add item to cart
+    function addToCart(button) {
+      event.preventDefault();
+      let foodItem = button.parentElement.parentElement;
+      let title = foodItem.querySelector('.food-details h3').innerText;
+      let priceText = foodItem.querySelector('.food-details p').innerText;
+      let price = parseInt(priceText.replace('₩', '').replace(',', ''));
+      let qty = parseInt(foodItem.querySelector('.qty-input').value);
+      let image = foodItem.querySelector('img').src;
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+      let existingItemIndex = cart.findIndex(item => item.title === title);
+      if (existingItemIndex > -1) {
+        cart[existingItemIndex].qty += qty;
+      } else {
+        cart.push({ title, price, qty, image });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log(`Added to cart: ${title}, ${priceText}, Qty: ${qty}`);
+    }
+
+  </script>
+</body>
+</html>

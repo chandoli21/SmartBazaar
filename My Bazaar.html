@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Smart Bazaar</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      padding-bottom: 120px; /* Adjusted for bottom navigation bar */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-details, .order-history {
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .profile-details h2, .order-history h2 {
+      margin-top: 0;
+    }
+
+    .profile-details p, .order-history p {
+      margin: 10px 0;
+    }
+
+    .logout-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .order-item {
+      background-color: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      text-align: left;
+    }
+
+    .order-item h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .order-item p {
+      margin: 5px 0;
+      color: gray;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Bazaar</h1>
+
+    <!-- Profile Details Section -->
+    <div class="profile-details">
+      <h2>Profile Details</h2>
+      <p><strong>Name:</strong> <span id="userName">Jeongchan Lee</span></p>
+      <p><strong>Email:</strong> <span id="userEmail">chandoli21@sju.ac.kr</span></p>
+      <p><strong>Phone:</strong> <span id="userPhone">010-1234-5678</span></p>
+      <button class="logout-button" onclick="logout()">Sign out</button>
+    </div>
+
+    <!-- Order History Section -->
+    <div class="order-history">
+      <h2>Order History</h2>
+      <div id="orderHistory">
+        <!-- Order items will be dynamically inserted here -->
+        <div class="order-item">
+          <h3>Order #1234</h3>
+          <p>Date: 2024-05-01</p>
+          <p>Total: KRW 25,800</p>
+        </div>
+        <div class="order-item">
+          <h3>Order #5678</h3>
+          <p>Date: 2024-04-21</p>
+          <p>Total: KRW 14,500</p>
+        </div>
+        <!-- Add more orders here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='Homepage.html'">
+      <img src="./Home.jpg" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='cart.html'">
+      <img src="./Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Simulate fetching user data
+      let user = {
+        name: 'Jeongchan Lee',
+        email: 'chandoli21@sju.ac.kr',
+        phone: '010-1234-5678',
+        orders: [
+          { id: 1234, date: '2024-05-01', total: 25800 },
+          { id: 5678, date: '2024-04-21', total: 14500 }
+        ]
+      };
+
+      // Display user details
+      document.getElementById('userName').innerText = user.name;
+      document.getElementById('userEmail').innerText = user.email;
+      document.getElementById('userPhone').innerText = user.phone;
+
+      // Display order history
+      let orderHistoryContainer = document.getElementById('orderHistory');
+      orderHistoryContainer.innerHTML = '';
+      user.orders.forEach(order => {
+        let orderItem = document.createElement('div');
+        orderItem.classList.add('order-item');
+        orderItem.innerHTML = `
+          <h3>Order #${order.id}</h3>
+          <p>Date: ${order.date}</p>
+          <p>Total: KRW ${order.total.toLocaleString()}</p>
+        `;
+        orderHistoryContainer.appendChild(orderItem);
+      });
+    });
+
+    function logout() {
+      // Simulate logging out
+      alert('Logged out');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

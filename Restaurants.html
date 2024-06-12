@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bazaar</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      padding-bottom: 120px; /* Added padding to accommodate the nav bar */
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .search-container {
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      padding: 5px;
+    }
+
+    #searchInput {
+      background-color: white;
+      padding: 10px;
+      font-size: medium;
+      text-align: left;
+      width: 100%;
+      border: none;
+    }
+
+    .logo {
+      border-radius: 15px;
+      padding: 20px;
+      width: 254px;
+      height: 100px; 
+      margin: 0 auto;
+      display: block;
+    }
+
+    .restaurant, .food-store {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .restaurant-item, .food-store-item {
+      width: calc(30% - 20px);
+      margin: 10px;
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+
+    .restaurant-item:hover, .food-store-item:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-container {
+      padding-bottom: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .restaurant-item img, .food-store-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .restaurant-details, .food-store-details {
+      padding: 15px;
+    }
+
+    .restaurant-details h3, .food-store-details h3 {
+      font-size: 1.2rem;
+      color: black;
+      margin: 0;
+    }
+
+    .restaurant-details p, .food-store-details p {
+      font-size: 1rem;
+      color: gray;
+      margin: 5px 0 0;
+    }
+
+    .restaurant-item a, .food-store-item a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .restaurant-item a:hover, .food-store-item a:hover {
+      text-decoration: none;
+    }
+
+    .category-header {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .no-result {
+      text-align: center;
+      font-size: 1.2rem;
+      color: gray;
+      display: none;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    @media screen and (max-width: 1200px) {
+      .container {
+        padding: 10px;
+        padding-bottom: 120px;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      .restaurant-item, .food-store-item {
+        width: calc(45% - 20px);
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .restaurant-item, .food-store-item {
+        width: calc(100% - 20px);
+      }
+    }
+
+    .description-container {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      background-color: #f3f3f3;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-image {
+      width: 100px;
+      height: 100px;
+      margin-right: 15px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .description-text {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .description-text p {
+      margin: 0;
+      font-size: 1rem;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo -->
+    <img src="./SmartBazaar.png" alt="Logo" class="logo">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <input type="text" id="searchInput" placeholder="Search">
+    </div>
+    
+    <!-- Category Header for Restaurants -->
+    <h2>Restaurants</h2>
+    <div class="category-header"></div>
+    <div class="no-result" id="noRestaurantResult">No result</div>
+
+    <!-- Restaurant items -->
+    <div class="restaurant" id="restaurantContainer">
+      <div class="restaurant-item">
+        <a href="./Kebabshi.html">
+          <div class="image-container">
+            <img src="./Kebabshi.jpg" alt="Kebabshi">
+          </div>
+          <div class="restaurant-details">
+            <h3>Kebabshi (케밥씨)</h3> 
+            <p>⭐ 4.9 (48 Reviews) · Delivery ₩3,300 · Pick-up at 서울 광진구 군자로 100-1 1F</p> 
+          </div>
+        </a>
+      </div>
+
+      <div class="restaurant-item">
+        <a href="./Big Brother's Burger.html">
+          <div class="image-container">
+            <img src="./BBB main logo.jpg" alt="Big Brother's Burger">
+          </div>
+          <div class="restaurant-details">
+            <h3>Big Brother's Burger</h3>
+            <p>⭐ 5.0 (10 Reviews) · Pick-up only at 서울 광진구 군자로 127 2F</p> 
+          </div>
+        </a>
+      </div>
+
+      <div class="restaurant-item">
+        <a href="./MTM's Kitchen.html">
+          <div class="image-container">
+            <img src="./MTM's Kitchen.jpg" alt="MTM's Kitchen">
+          </div>
+          <div class="restaurant-details">
+            <h3>MTM's Kitchen</h3>
+            <p>⭐ 5.0 (21 Reviews) · Pick-up only at Bus stand near 새마을금고</p> 
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='Homepage.html'">
+      <img src="Home.jpg" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="focusSearch()">
+      <img src="./Search.jpg" alt="Search">
+      <span>Search</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='./Cart.html'">
+      <img src="./Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='./My Bazaar.html'">
+      <img src="./My Bazaar.jpg" alt="My Bazaar">
+      <span>My Bazaar</span>
+    </div>
+  </div>
+
+  <script>
+    // Get input element
+    let searchInput = document.getElementById('searchInput');
+    let noRestaurantResult = document.getElementById('noRestaurantResult');
+    let restaurantContainer = document.getElementById('restaurantContainer');
+
+    // Hide no result messages initially
+    noRestaurantResult.style.display = 'none';
+
+    // Add event listener
+    searchInput.addEventListener('input', function() {
+      let filter = searchInput.value.toUpperCase();
+
+      // Search Restaurants
+      let restaurants = restaurantContainer.querySelectorAll('.restaurant-item');
+      let restaurantsVisible = false;
+      restaurants.forEach(function(restaurant) {
+        let title = restaurant.querySelector('.restaurant-details h3').innerText.toUpperCase();
+        if (title.indexOf(filter) > -1) {
+          restaurant.style.display = '';
+          restaurantsVisible = true;
+        } else {
+          restaurant.style.display = 'none';
+        }
+      });
+      noRestaurantResult.style.display = restaurantsVisible ? 'none' : 'block';
+    });
+
+    // Function to focus on the search input
+    function focusSearch() {
+      searchInput.focus();
+    }
+  </script>
+
+
+</body>
+</html>

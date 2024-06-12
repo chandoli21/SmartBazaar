@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bazaar</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(255, 237, 166);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      padding-bottom: 100px; /* Reduced padding to accommodate the nav bar */
+      position: relative;
+    }
+
+    .logo {
+      border-radius: 15px;
+      padding: 20px;
+      width: 254px;
+      height: 100px; 
+      margin: 0 auto;
+      display: block;
+    }
+
+    .restaurant, .food-store {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center the items */
+    }
+
+    .restaurant-item, .food-store-item {
+      width: calc(30% - 20px);
+      margin: 10px;
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+
+    .restaurant-item:hover, .food-store-item:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-container {
+      padding-bottom: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .restaurant-item img, .food-store-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .restaurant-details, .food-store-details {
+      padding: 15px;
+    }
+
+    .restaurant-details h3, .food-store-details h3 {
+      font-size: 1.2rem;
+      color: black;
+      margin: 0;
+    }
+
+    .restaurant-details p, .food-store-details p {
+      font-size: 1rem;
+      color: gray;
+      margin: 5px 0 0;
+    }
+
+    .restaurant-item a, .food-store-item a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .restaurant-item a:hover, .food-store-item a:hover {
+      text-decoration: none;
+    }
+
+    .category-header {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .no-result {
+      text-align: center;
+      font-size: 1.2rem;
+      color: gray;
+      display: none;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      flex-grow: 1;
+      text-align: center;
+      padding: 10px;
+      color: grey;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 10pt;
+    }
+
+    .nav-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    @media screen and (max-width: 1200px) {
+      .container {
+        padding: 10px;
+        padding-bottom: 100px;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      .restaurant-item, .food-store-item {
+        width: calc(45% - 20px);
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .restaurant-item, .food-store-item {
+        width: calc(100% - 20px);
+      }
+    }
+
+    .description-container {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      background-color: #f3f3f3;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-image {
+      width: 100px;
+      height: 100px;
+      margin-right: 15px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .description-text {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .description-text p {
+      margin: 0;
+      font-size: 1rem;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="restaurant">
+      <!-- Logo -->
+      <img src="./SmartBazaar.png" alt="Logo" class="logo">
+      
+      <!-- Category Header for Restaurants -->
+      <div class="category-header"></div>
+      <div class="no-result" id="noRestaurantResult">No result</div>
+
+        <div class="restaurant-item">
+          <a href="./Markets.html">
+            <div class="image-container">
+              <img src="./Markets.png" alt="Big Brother's Burger">
+            </div>
+            <div class="restaurant-details">
+              <h3>Markets</h3> 
+            </div>
+          </a>
+        </div>
+
+        <div class="restaurant-item">
+          <a href="./Restaurants.html">
+            <div class="image-container">
+              <img src="./Restaurants.png" alt="Restaurants">
+            </div>
+            <div class="restaurant-details">
+              <h3>Restaurants</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer div for additional bottom space -->
+  <div style="height: 40px;"></div> <!-- Reduced height of spacer div -->
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='./Cart.html'">
+      <img src="./Cart.jpg" alt="Cart">
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='./My Bazaar.html'">
+      <img src="./My Bazaar.jpg" alt="My Bazaar">
+      <span>My Bazaar</span>
+    </div>
+  </div>
+
+  <script>
+  </script>
+</body>
+</html>
