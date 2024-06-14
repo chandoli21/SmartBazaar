@@ -181,8 +181,8 @@
     <h1>Your Cart</h1>
     <div id="cartItems"></div>
     <div class="total-container" id="cartTotal">Total: ₩0</div>
-    <button class="delivery-button" onclick="window.location.href='Delivery.html'">Delivery</button>
-    <button class="pickup-button" onclick="window.location.href='Pickup.html'">Pickup</button>
+    <button class="delivery-button" id="deliveryButton">Delivery</button>
+    <button class="pickup-button" id="pickupButton">Pickup</button>
     <button class="remove-all-button" id="removeAllButton">Remove All</button>
   </div>
 
@@ -220,7 +220,6 @@
           let cartItem = document.createElement('div');
           cartItem.classList.add('cart-item');
           cartItem.innerHTML = `
-          
             <img src="${item.image}" alt="${item.title}">
             <div class="cart-details">
               <h3>${item.title}</h3>
@@ -252,9 +251,37 @@
         updateCart();
       }
 
+      function showPopup(message) {
+        alert(message);
+      }
+
+      function checkCartBeforeAction() {
+        if (cart.length === 0) {
+          showPopup("Your cart is empty. Please add items to your cart before proceeding.");
+          return false;
+        }
+        return true;
+      }
+
       document.getElementById('removeAllButton').addEventListener('click', function() {
         cart = [];
         updateCart();
+      });
+
+      document.getElementById('deliveryButton').addEventListener('click', function(event) {
+        if (!checkCartBeforeAction()) {
+          event.preventDefault();
+        } else {
+          window.location.href = 'Delivery.html';
+        }
+      });
+
+      document.getElementById('pickupButton').addEventListener('click', function(event) {
+        if (!checkCartBeforeAction()) {
+          event.preventDefault();
+        } else {
+          window.location.href = 'Pickup.html';
+        }
       });
 
       updateCart();
