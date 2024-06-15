@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- (existing head content) -->
+  <style>
+    /* (existing styles) */
+    
+    .login-container {
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: green;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: darkgreen;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .admin-section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .admin-section input,
+    .admin-section button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- (existing content) -->
+    
+    <!-- Admin Login Form -->
+    <div class="login-container" id="loginContainer">
+      <h2>Admin Login</h2>
+      <input type="text" id="adminId" placeholder="Enter Admin ID">
+      <button onclick="loginAdmin()">Login</button>
+    </div>
+    
+    <!-- Admin Section to Add New Food Item -->
+    <div class="admin-section" id="adminSection">
+      <h2>Add New Food Item</h2>
+      <input type="text" id="foodName" placeholder="Food Name">
+      <input type="text" id="foodPrice" placeholder="Price (₩)">
+      <input type="text" id="foodImage" placeholder="Image URL">
+      <button onclick="addNewFoodItem()">Add Food Item</button>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <!-- (existing bottom nav content) -->
+
+  <script>
+    // (existing JavaScript)
+
+    const adminCredentials = {
+      id: "chandoli21@sju.ac.kr"
+    };
+
+    function loginAdmin() {
+      const adminId = document.getElementById('adminId').value;
+      if (adminId === adminCredentials.id) {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('adminSection').style.display = 'block';
+      } else {
+        alert('Invalid Admin ID');
+      }
+    }
+
+    function addNewFoodItem() {
+      const foodName = document.getElementById('foodName').value;
+      const foodPrice = document.getElementById('foodPrice').value;
+      const foodImage = document.getElementById('foodImage').value;
+
+      if (foodName && foodPrice && foodImage) {
+        const foodContainer = document.getElementById('foodContainer');
+        
+        const newFoodItem = document.createElement('div');
+        newFoodItem.classList.add('food-item');
+        
+        newFoodItem.innerHTML = `
+          <a href="#">
+            <div class="image-container">
+              <img src="${foodImage}" alt="${foodName}">
+            </div>
+            <div class="food-details">
+              <h3>${foodName}</h3>
+              <p>₩${foodPrice}</p>
+              <div class="qty-container">
+                <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+                <input type="text" class="qty-input" value="1" readonly>
+                <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+            </div>
+          </a>
+        `;
+
+        foodContainer.appendChild(newFoodItem);
+      } else {
+        alert('Please fill in all fields');
+      }
+    }
+  </script>
+</body>
+</html>
