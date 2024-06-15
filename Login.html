@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Bazaar - Login</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: system-ui, sans-serif;
       margin: 0;
@@ -13,53 +17,49 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column; /* Centering content vertically */
-      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
     }
 
     .logo {
-      border-radius: 15px;
-      padding: 20px;
-      max-width: calc(80% - 40px);
-      width: 320px;
-      height: 160px; 
-      margin: 0 auto;
+      width: 100%;
+      max-width: 320px;
+      height: auto;
       display: block;
+      margin: 0 auto 20px;
     }
 
     .login-container {
-      background-color: rgb(255, 237, 166);
+      background-color: white;
       border-radius: 10px;
-      padding: 40px;
-      text-align: center;
-      max-width: calc(90%);
-      width: 100%;
+      padding: 20px;
     }
 
     .login-container h1 {
       margin-bottom: 20px;
+      font-size: 1.5rem;
     }
 
-    .login-container input {
-      width: calc(100% - 40px);
-      padding: 15px; /* Increase padding for taller input fields */
-      margin: 10px 0;
+    .login-container input,
+    .login-container button {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
       font-size: 1rem;
     }
 
     .login-container button {
-      width: calc(100% - 40px);
-      max-width: 200px; /* Limit the maximum width of the button */
-      padding: 15px; /* Increase padding for taller buttons */
       background-color: #207feb;
       color: white;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      font-size: 1rem;
-      margin-top: 10px;
     }
 
     .login-container button:hover {
@@ -68,6 +68,7 @@
 
     .signup-option {
       margin-top: 20px;
+      text-align: center;
     }
 
     .signup-option a {
@@ -79,29 +80,28 @@
 </head>
 <body>
   
-  <img src="SmartBazaar.png" alt="Logo" class="logo"> <!-- Logo at the top -->
-  <div class="login-container">
-    <h1>Welcome to Smart Bazaar!</h1>
-    <form id="loginForm">
-      <input type="email" id="email" name="email" placeholder="Email" required>
-      <input type="password" id="password" name="password" placeholder="Password" required>
-      <button type="submit">Log in</button>
-    </form>
-    <div class="signup-option">
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  <div class="container">
+    <img src="SmartBazaar.png" alt="Logo" class="logo"> <!-- Logo at the top -->
+    <div class="login-container">
+      <h1>Welcome to Smart Bazaar!</h1>
+      <form id="loginForm">
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Log in</button>
+      </form>
+      <div class="signup-option">
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+      </div>
     </div>
   </div>
 
   <script>
-    // Get form element
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      // Get form data
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      // Simulate an API call to authenticate the user
       if (email === 'chandoli21@sju.ac.kr' && password === 'demo@1234') {
         window.location.href = './index.html';
       } else {
