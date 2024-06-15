@@ -497,13 +497,16 @@
       let qty = parseInt(foodItem.querySelector('.qty-input').value);
       let image = foodItem.querySelector('img').src;
   
+      // Bazaar name
+      let bazaarName = "Foreign Food Mart";
+  
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       
       let existingItemIndex = cart.findIndex(item => item.title === title);
       if (existingItemIndex > -1) {
         cart[existingItemIndex].qty += qty;
       } else {
-        cart.push({ title, price, qty, image });
+        cart.push({ title, price, qty, image, bazaar: bazaarName }); // Include bazaar name
       }
       
       localStorage.setItem('cart', JSON.stringify(cart));

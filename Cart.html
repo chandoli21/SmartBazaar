@@ -181,9 +181,7 @@
     <h1>Your Cart</h1>
     <div id="cartItems"></div>
     <div class="total-container" id="cartTotal">Total: ₩0</div>
-    <button class="delivery-button" id="deliveryButton">Delivery</button>
-    <button class="pickup-button" id="pickupButton">Pickup</button>
-    <button class="remove-all-button" id="removeAllButton">Remove All</button>
+    <button class="remove-all-button" id="removeAllButton">Empty Cart</button>
   </div>
 
   <!-- Bottom Navigation Bar -->
@@ -203,89 +201,110 @@
       let cartItemsContainer = document.getElementById('cartItems');
       let cartTotal = document.getElementById('cartTotal');
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+  
       function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-
+  
       function updateCart() {
         cartItemsContainer.innerHTML = '';
         let total = 0;
-
-        cart.forEach((item, index) => {
-          let itemPrice = item.price || 0; // Ensure price is set
-          let itemTotal = itemPrice * item.qty;
-          total += itemTotal;
-
-          let cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">
-            <div class="cart-details">
-              <h3>${item.title}</h3>
-              <p>₩${formatNumber(itemPrice)}</p>
-              <div class="qty-container">
-                <button class="qty-button" onclick="changeQty(${index}, -1)">-</button>
-                <input type="text" class="qty-input" value="${item.qty}" readonly>
-                <button class="qty-button" onclick="changeQty(${index}, 1)">+</button>
-              </div>
-            </div>
-            <button class="remove-button" onclick="removeFromCart(${index})">X</button>
-          `;
-          cartItemsContainer.appendChild(cartItem);
+        let bazaars = {};
+  
+        // Group items by bazaar
+        cart.forEach((item) => {
+          if (!bazaars[item.bazaar]) {
+            bazaars[item.bazaar] = [];
+          }
+          bazaars[item.bazaar].push(item);
         });
-
+  
+        for (let bazaar in bazaars) {
+          let bazaarContainer = document.createElement('div');
+          bazaarContainer.classList.add('bazaar-container');
+  
+          let bazaarHeader = document.createElement('h2');
+          bazaarHeader.textContent = bazaar;
+          bazaarContainer.appendChild(bazaarHeader);
+  
+          let bazaarTotal = 0;
+  
+          bazaars[bazaar].forEach((item, index) => {
+            let itemPrice = item.price || 0;
+            let itemTotal = itemPrice * item.qty;
+            bazaarTotal += itemTotal;
+  
+            let cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+              <img src="${item.image}" alt="${item.title}">
+              <div class="cart-details">
+                <h3>${item.title}</h3>
+                <p>₩${formatNumber(itemPrice)}</p>
+                <div class="qty-container">
+                  <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, -1)">-</button>
+                  <input type="text" class="qty-input" value="${item.qty}" readonly>
+                  <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, 1)">+</button>
+                </div>
+              </div>
+              <button class="remove-button" onclick="removeFromCart('${bazaar}', ${index})">X</button>
+            `;
+            bazaarContainer.appendChild(cartItem);
+          });
+  
+          let bazaarTotalContainer = document.createElement('div');
+          bazaarTotalContainer.classList.add('total-container');
+          bazaarTotalContainer.textContent = `Total for ${bazaar}: ₩${formatNumber(bazaarTotal)}`;
+          bazaarContainer.appendChild(bazaarTotalContainer);
+  
+          let bazaarButtons = document.createElement('div');
+          bazaarButtons.innerHTML = `
+            <button class="remove-all-button" onclick="removeAllFromBazaar('${bazaar}')">Remove All</button>
+            <button class="delivery-button" onclick="checkout('Delivery', '${bazaar}')">Delivery</button>
+            <button class="pickup-button" onclick="checkout('Pickup', '${bazaar}')">Pickup</button>
+          `;
+          bazaarContainer.appendChild(bazaarButtons);
+  
+          cartItemsContainer.appendChild(bazaarContainer);
+          total += bazaarTotal;
+        }
+  
         cartTotal.innerText = `Total: ₩${formatNumber(total)}`;
         localStorage.setItem('cart', JSON.stringify(cart));
       }
-
-      window.changeQty = function(index, delta) {
-        let newQty = cart[index].qty + delta;
+  
+      window.changeQty = function(bazaar, index, delta) {
+        let newQty = cart.filter(item => item.bazaar === bazaar)[index].qty + delta;
         if (newQty < 1) newQty = 1;
-        cart[index].qty = newQty;
+        cart.filter(item => item.bazaar === bazaar)[index].qty = newQty;
         updateCart();
       }
-
-      window.removeFromCart = function(index) {
-        cart.splice(index, 1);
+  
+      window.removeFromCart = function(bazaar, index) {
+        cart.filter(item => item.bazaar === bazaar).splice(index, 1);
         updateCart();
       }
-
-      function showPopup(message) {
-        alert(message);
+  
+      window.removeAllFromBazaar = function(bazaar) {
+        cart = cart.filter(item => item.bazaar !== bazaar);
+        updateCart();
       }
-
-      function checkCartBeforeAction() {
+  
+      window.checkout = function(type, bazaar) {
         if (cart.length === 0) {
-          showPopup("Your cart is empty. Please add items to your cart before proceeding.");
-          return false;
+          alert("Your cart is empty. Please add items to your cart before proceeding.");
+          return;
         }
-        return true;
+        alert(`${type} selected for ${bazaar}`);
+        // Replace with your checkout logic, e.g., redirect to checkout page
+        window.location.href = 'Delivery.html';
       }
-
-      document.getElementById('removeAllButton').addEventListener('click', function() {
-        cart = [];
-        updateCart();
-      });
-
-      document.getElementById('deliveryButton').addEventListener('click', function(event) {
-        if (!checkCartBeforeAction()) {
-          event.preventDefault();
-        } else {
-          window.location.href = 'Delivery.html';
-        }
-      });
-
-      document.getElementById('pickupButton').addEventListener('click', function(event) {
-        if (!checkCartBeforeAction()) {
-          event.preventDefault();
-        } else {
-          window.location.href = 'Pickup.html';
-        }
-      });
-
+  
       updateCart();
     });
   </script>
+  
+  
+  
 </body>
 </html>

@@ -300,7 +300,7 @@
             <img src="./Jumbo Kebab.png" alt="Jumbo Kebab">
           </div>
           <div class="food-details">
-            <h3>Jumbo Kebab</h3> 
+            <h3>Jumbo Kebab (Chicken)</h3> 
             <p>₩8,900</p>
             <div class="qty-container">
               <button class="qty-button" onclick="changeQty(this, -1)">-</button>
@@ -317,7 +317,7 @@
             <img src="./Rice Kebab.png" alt="Rice Kebab">
           </div>
           <div class="food-details">
-            <h3>Rice Kebab</h3>
+            <h3>Rice Kebab (Chicken)</h3>
             <p>₩9,900</p>
             <div class="qty-container">
               <button class="qty-button" onclick="changeQty(this, -1)">-</button>
@@ -334,7 +334,7 @@
             <img src="./Rice Tortilla Kebab.png" alt="Rice Tortilla Kebab">
           </div>
           <div class="food-details">
-            <h3>Rice Tortilla Kebab</h3>
+            <h3>Rice Tortilla Kebab (Chicken)</h3>
             <p>₩7,900</p>
             <div class="qty-container">
               <button class="qty-button" onclick="changeQty(this, -1)">-</button>
@@ -351,8 +351,151 @@
             <img src="./Toast Kebab.png" alt="Toast Kebab">
           </div>
           <div class="food-details">
-            <h3>Toast Kebab</h3>
-            <p>₩8,000</p>
+            <h3>Toast Kebab (Chicken)</h3>
+            <p>₩8,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Special Kebab.png" alt="Special Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Special Kebab (Chicken)</h3>
+            <p>₩8,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Box Kebab.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Box Kebab (Chicken)</h3>
+            <p>₩8,900</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Category Header for Options -->
+    <div class="category-header">Options</div>
+    <div class="no-result" id="noOptionResult">No result</div>
+
+    <div class="food" id="optionContainer">
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Change to lamb</h3>
+            <p>₩1,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Mix chicken & lamb</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Add meat</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Add cheese</h3>
+            <p>₩2,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Add rice</h3>
+            <p>₩1,000</p>
+            <div class="qty-container">
+              <button class="qty-button" onclick="changeQty(this, -1)">-</button>
+              <input type="text" class="qty-input" value="1" readonly>
+              <button class="qty-button" onclick="changeQty(this, 1)">+</button>
+            </div>
+            <button class="add-button" onclick="addToCart(this)">Add to cart</button>
+          </div>
+        </a>
+      </div> 
+      <div class="food-item">
+        <a href="#">
+          <div class="image-container">
+            <img src="./Option.png" alt="Box Kebab">
+          </div>
+          <div class="food-details">
+            <h3>Add vegetable</h3>
+            <p>₩1,000</p>
             <div class="qty-container">
               <button class="qty-button" onclick="changeQty(this, -1)">-</button>
               <input type="text" class="qty-input" value="1" readonly>
@@ -451,22 +594,27 @@
     let searchInput = document.getElementById('searchInput');
     let noFoodResult = document.getElementById('noFoodResult');
     let foodContainer = document.getElementById('foodContainer');
+    let noOptionResult = document.getElementById('noOptionResult');
+    let optionContainer = document.getElementById('optionContainer');
     let noDrinkResult = document.getElementById('noDrinkResult');
     let drinkContainer = document.getElementById('drinkContainer');
-
+  
     // Hide no result messages initially
     noFoodResult.style.display = 'none';
+    noOptionResult.style.display = 'none';
     noDrinkResult.style.display = 'none';
-
+  
     // Add event listener
     searchInput.addEventListener('input', function() {
       let filter = searchInput.value.toUpperCase();
       let foods = foodContainer.querySelectorAll('.food-item');
+      let options = optionContainer.querySelectorAll('.food-item');
       let drinks = drinkContainer.querySelectorAll('.food-item');
       
       let foodsVisible = false;
+      let optionsVisible = false;
       let drinksVisible = false;
-
+  
       foods.forEach(function(food) {
         let title = food.querySelector('.food-details h3').innerText.toUpperCase();
         if (title.indexOf(filter) > -1) {
@@ -476,7 +624,17 @@
           food.style.display = 'none';
         }
       });
-
+  
+      options.forEach(function(option) {
+        let title = option.querySelector('.food-details h3').innerText.toUpperCase();
+        if (title.indexOf(filter) > -1) {
+          option.style.display = '';
+          optionsVisible = true;
+        } else {
+          option.style.display = 'none';
+        }
+      });
+  
       drinks.forEach(function(drink) {
         let title = drink.querySelector('.food-details h3').innerText.toUpperCase();
         if (title.indexOf(filter) > -1) {
@@ -486,9 +644,10 @@
           drink.style.display = 'none';
         }
       });
-
+  
       // Update visibility of no result messages
       noFoodResult.style.display = foodsVisible ? 'none' : 'block';
+      noOptionResult.style.display = optionsVisible ? 'none' : 'block';
       noDrinkResult.style.display = drinksVisible ? 'none' : 'block';
     });
     
@@ -496,7 +655,7 @@
     function focusSearch() {
       searchInput.focus();
     }
-
+  
     // Function to change quantity
     function changeQty(button, delta) {
       event.preventDefault();
@@ -505,7 +664,7 @@
       if (newQty < 1) newQty = 1;
       input.value = newQty;
     }
-
+  
     // Function to add item to cart
     function addToCart(button) {
       event.preventDefault();
@@ -515,20 +674,24 @@
       let price = parseInt(priceText.replace('₩', '').replace(',', ''));
       let qty = parseInt(foodItem.querySelector('.qty-input').value);
       let image = foodItem.querySelector('img').src;
-
+  
+      // Bazaar name
+      let bazaarName = "Kebabshi";
+  
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       
       let existingItemIndex = cart.findIndex(item => item.title === title);
       if (existingItemIndex > -1) {
         cart[existingItemIndex].qty += qty;
       } else {
-        cart.push({ title, price, qty, image });
+        cart.push({ title, price, qty, image, bazaar: bazaarName }); // Include bazaar name
       }
       
       localStorage.setItem('cart', JSON.stringify(cart));
       console.log(`Added to cart: ${title}, ${priceText}, Qty: ${qty}`);
     }
-
   </script>
+  
+  
 </body>
 </html>
