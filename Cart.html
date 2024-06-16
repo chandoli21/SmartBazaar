@@ -198,122 +198,128 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      let cartItemsContainer = document.getElementById('cartItems');
-      let cartTotal = document.getElementById('cartTotal');
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-      function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
-  
-      function updateCart() {
-        cartItemsContainer.innerHTML = '';
-        let total = 0;
-        let bazaars = {};
-  
-        // Group items by bazaar
-        cart.forEach((item) => {
-          if (!bazaars[item.bazaar]) {
-            bazaars[item.bazaar] = [];
-          }
-          bazaars[item.bazaar].push(item);
-        });
-  
-        for (let bazaar in bazaars) {
-          let bazaarContainer = document.createElement('div');
-          bazaarContainer.classList.add('bazaar-container');
-  
-          let bazaarHeader = document.createElement('h2');
-          bazaarHeader.textContent = bazaar;
-          bazaarContainer.appendChild(bazaarHeader);
-  
-          let bazaarTotal = 0;
-  
-          bazaars[bazaar].forEach((item, index) => {
-            let itemPrice = item.price || 0;
-            let itemTotal = itemPrice * item.qty;
-            bazaarTotal += itemTotal;
-  
-            let cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.innerHTML = `
-              <img src="${item.image}" alt="${item.title}">
-              <div class="cart-details">
-                <h3>${item.title}</h3>
-                <p>₩${formatNumber(itemPrice)}</p>
-                <div class="qty-container">
-                  <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, -1)">-</button>
-                  <input type="text" class="qty-input" value="${item.qty}" readonly>
-                  <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, 1)">+</button>
-                </div>
+    let cartItemsContainer = document.getElementById('cartItems');
+    let cartTotal = document.getElementById('cartTotal');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function updateCart() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      let bazaars = {};
+
+      // Group items by bazaar
+      cart.forEach((item) => {
+        if (!bazaars[item.bazaar]) {
+          bazaars[item.bazaar] = [];
+        }
+        bazaars[item.bazaar].push(item);
+      });
+
+      for (let bazaar in bazaars) {
+        let bazaarContainer = document.createElement('div');
+        bazaarContainer.classList.add('bazaar-container');
+
+        let bazaarHeader = document.createElement('h2');
+        bazaarHeader.textContent = bazaar;
+        bazaarContainer.appendChild(bazaarHeader);
+
+        let bazaarTotal = 0;
+
+        bazaars[bazaar].forEach((item, index) => {
+          let itemPrice = item.price || 0;
+          let itemTotal = itemPrice * item.qty;
+          bazaarTotal += itemTotal;
+
+          let cartItem = document.createElement('div');
+          cartItem.classList.add('cart-item');
+          cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <div class="cart-details">
+              <h3>${item.title}</h3>
+              <p>₩${formatNumber(itemPrice)}</p>
+              <div class="qty-container">
+                <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, -1)">-</button>
+                <input type="text" class="qty-input" value="${item.qty}" readonly>
+                <button class="qty-button" onclick="changeQty('${bazaar}', ${index}, 1)">+</button>
               </div>
-              <button class="remove-button" onclick="removeFromCart('${bazaar}', ${index})">X</button>
-            `;
-            bazaarContainer.appendChild(cartItem);
-          });
-  
-          let bazaarTotalContainer = document.createElement('div');
-          bazaarTotalContainer.classList.add('total-container');
-          bazaarTotalContainer.textContent = `Total for ${bazaar}: ₩${formatNumber(bazaarTotal)}`;
-          bazaarContainer.appendChild(bazaarTotalContainer);
-  
-          let bazaarButtons = document.createElement('div');
-          bazaarButtons.innerHTML = `
-            <button class="remove-all-button" onclick="removeAllFromBazaar('${bazaar}')">Remove All</button>
-            <button class="delivery-button" onclick="delivery('Delivery','${bazaar}')">Delivery</button>
-            <button class="pickup-button" onclick="pickup('Pickup','${bazaar}')">Pickup</button>
+            </div>
+            <button class="remove-button" onclick="removeFromCart('${bazaar}', ${index})">X</button>
           `;
-          bazaarContainer.appendChild(bazaarButtons);
-  
-          cartItemsContainer.appendChild(bazaarContainer);
-          total += bazaarTotal;
-        }
-  
-        cartTotal.innerText = `Total: ₩${formatNumber(total)}`;
-        localStorage.setItem('cart', JSON.stringify(cart));
-      }
-  
-      window.changeQty = function(bazaar, index, delta) {
-        let newQty = cart.filter(item => item.bazaar === bazaar)[index].qty + delta;
-        if (newQty < 1) newQty = 1;
-        cart.filter(item => item.bazaar === bazaar)[index].qty = newQty;
-        updateCart();
-      }
-  
-      window.removeFromCart = function(bazaar, index) {
-        const bazaarItems = cart.filter(item => item.bazaar === bazaar);
-        if (bazaarItems.length > index) {
-          const itemIndexInCart = cart.indexOf(bazaarItems[index]);
-          cart.splice(itemIndexInCart, 1);
-        }
-        updateCart();
-      }
-  
-      window.removeAllFromBazaar = function(bazaar) {
-        cart = cart.filter(item => item.bazaar !== bazaar);
-        updateCart();
-      }
-  
-      window.pickup = function(type, bazaar) {
-        if (cart.length === 0) {
-          alert("Your cart is empty. Please add items to your cart before proceeding.");
-          return;
-        }
-        alert(`${type} selected for ${bazaar}. Continue?`);
-        window.location.href = 'Pickup.html';
+          bazaarContainer.appendChild(cartItem);
+        });
+
+        let bazaarTotalContainer = document.createElement('div');
+        bazaarTotalContainer.classList.add('total-container');
+        bazaarTotalContainer.textContent = `Total for ${bazaar}: ₩${formatNumber(bazaarTotal)}`;
+        bazaarContainer.appendChild(bazaarTotalContainer);
+
+        let bazaarButtons = document.createElement('div');
+        bazaarButtons.innerHTML = `
+          <button class="remove-all-button" onclick="removeAllFromBazaar('${bazaar}')">Remove All</button>
+          <button class="delivery-button" onclick="delivery('Delivery','${bazaar}')">Delivery</button>
+          <button class="pickup-button" onclick="pickup('Pickup','${bazaar}')">Pickup</button>
+        `;
+        bazaarContainer.appendChild(bazaarButtons);
+
+        cartItemsContainer.appendChild(bazaarContainer);
+        total += bazaarTotal;
       }
 
-      window.delivery = function(type, bazaar) {
-        if (cart.length === 0) {
-          alert("Your cart is empty. Please add items to your cart before proceeding.");
-          return;
-        }
-        alert(`${type} selected for ${bazaar}. Continue?`);
-        window.location.href = 'Delivery.html';
+      cartTotal.innerText = `Total: ₩${formatNumber(total)}`;
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    window.changeQty = function(bazaar, index, delta) {
+      let newQty = cart.filter(item => item.bazaar === bazaar)[index].qty + delta;
+      if (newQty < 1) newQty = 1;
+      cart.filter(item => item.bazaar === bazaar)[index].qty = newQty;
+      updateCart();
+    }
+
+    window.removeFromCart = function(bazaar, index) {
+      const bazaarItems = cart.filter(item => item.bazaar === bazaar);
+      if (bazaarItems.length > index) {
+        const itemIndexInCart = cart.indexOf(bazaarItems[index]);
+        cart.splice(itemIndexInCart, 1);
       }
-  
+      updateCart();
+    }
+
+    window.removeAllFromBazaar = function(bazaar) {
+      cart = cart.filter(item => item.bazaar !== bazaar);
+      updateCart();
+    }
+
+    window.pickup = function(type, bazaar) {
+      if (cart.length === 0) {
+        alert("Your cart is empty. Please add items to your cart before proceeding.");
+        return;
+      }
+      alert(`${type} selected for ${bazaar}. Continue?`);
+      window.location.href = 'Pickup.html';
+    }
+
+    window.delivery = function(type, bazaar) {
+      if (cart.length === 0) {
+        alert("Your cart is empty. Please add items to your cart before proceeding.");
+        return;
+      }
+      alert(`${type} selected for ${bazaar}. Continue?`);
+      window.location.href = 'Delivery.html';
+    }
+
+    // Add event listener for the "Empty Cart" button
+    document.getElementById('removeAllButton').addEventListener('click', function() {
+      cart = [];
       updateCart();
     });
+
+    updateCart();
+  });
   </script>
 </body>
 </html>
