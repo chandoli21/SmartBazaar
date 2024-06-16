@@ -281,7 +281,11 @@
       }
   
       window.removeFromCart = function(bazaar, index) {
-        cart.filter(item => item.bazaar === bazaar).splice(index, 1);
+        const bazaarItems = cart.filter(item => item.bazaar === bazaar);
+        if (bazaarItems.length > index) {
+          const itemIndexInCart = cart.indexOf(bazaarItems[index]);
+          cart.splice(itemIndexInCart, 1);
+        }
         updateCart();
       }
   
@@ -303,8 +307,5 @@
       updateCart();
     });
   </script>
-  
-  
-  
 </body>
 </html>
