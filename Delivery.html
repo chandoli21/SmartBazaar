@@ -3,98 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Bazaar - Delivery</title>
+  <title>Smart Bazaar - Payment</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: system-ui, sans-serif;
       margin: 0;
       padding: 0;
       background-color: rgb(255, 237, 166);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    
+
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    .payment-container {
+      background-color: white;
+      border-radius: 10px;
       padding: 20px;
       text-align: center;
     }
 
-    h1 {
+    .payment-container h1 {
       margin-bottom: 20px;
+      font-size: 1.5rem;
     }
 
     .payment-methods {
       margin-top: 20px;
     }
 
-    .payment-method {
-      margin: 10px 0;
-      font-size: 1.2rem;
-      color: grey;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
+    .button {
+      display: block;
       width: 100%;
-      background-color: white;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 60px;
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-item {
-      flex-grow: 1;
-      text-align: center;
-      padding: 10px;
-      color: grey;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-bottom: 10px;
     }
 
-    .nav-item img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .nav-item span {
-      display: block;
-      font-size: 10pt;
-    }
-
-    .nav-item:hover {
-      background-color: #f0f0f0;
+    .button:hover {
+      background-color: #3b5998;
+      color: white;
     }
   </style>
 </head>
 <body>
+  
   <div class="container">
-    <h1>Payment Methods</h1>
-    <div class="payment-methods">
-      <div class="payment-method">Credit Card</div>
-      <div class="payment-method">Debit Card</div>
-      <div class="payment-method">PayPal</div>
-      <div class="payment-method">Apple Pay</div>
-      <div class="payment-method">Google Pay</div>
+    <img src="SmartBazaar.png" alt="Logo" class="logo"> <!-- Logo at the top -->
+    <div class="payment-container">
+      <h1>Select Payment Method</h1>
+      <div class="payment-methods">
+        <button class="button" onclick="selectPayment('Direct payment')">Direct Payment</button>
+        <button class="button" onclick="selectPayment('PAYCO')">PAYCO</button>
+        <button class="button" onclick="selectPayment('Kakao Pay')">Kakao Pay</button>
+        <button class="button" onclick="selectPayment('Naver Pay')">Naver Pay</button>
+      </div>
     </div>
   </div>
 
-  <!-- Bottom Navigation Bar -->
-  <div class="bottom-nav">
-    <div class="nav-item" onclick="window.location.href='index.html'">
-      <img src="./Home.jpg" alt="Home">
-      <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="window.location.href='Cart.html'">
-      <img src="./Cart.jpg" alt="Cart">
-      <span>Cart</span>
-    </div>
-    <div class="nav-item" onclick="window.location.href='My Bazaar.html'">
-      <img src="./My Bazaar.jpg" alt="My Bazaar">
-      <span>My Bazaar</span>
-    </div>
-  </div>
+  <script>
+    function selectPayment(paymentMethod) {
+      alert('Selected payment method: ' + paymentMethod);
+      // Implement logic to handle the selected payment method
+      // For example, you can redirect to a payment gateway, process payment information, or perform other actions based on the selected method.
+    }
+  </script>
 </body>
 </html>
