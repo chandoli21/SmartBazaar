@@ -260,8 +260,8 @@
           let bazaarButtons = document.createElement('div');
           bazaarButtons.innerHTML = `
             <button class="remove-all-button" onclick="removeAllFromBazaar('${bazaar}')">Remove All</button>
-            <button class="delivery-button" onclick="checkout('Delivery', '${bazaar}')">Delivery</button>
-            <button class="pickup-button" onclick="checkout('Pickup', '${bazaar}')">Pickup</button>
+            <button class="delivery-button" onclick="delivery('Delivery','${bazaar}')">Delivery</button>
+            <button class="pickup-button" onclick="pickup('Pickup','${bazaar}')">Pickup</button>
           `;
           bazaarContainer.appendChild(bazaarButtons);
   
@@ -294,13 +294,21 @@
         updateCart();
       }
   
-      window.checkout = function(type, bazaar) {
+      window.pickup = function(type, bazaar) {
         if (cart.length === 0) {
           alert("Your cart is empty. Please add items to your cart before proceeding.");
           return;
         }
-        alert(`${type} selected for ${bazaar}`);
-        // Replace with your checkout logic, e.g., redirect to checkout page
+        alert(`${type} selected for ${bazaar}. Continue?`);
+        window.location.href = 'Pickup.html';
+      }
+
+      window.delivery = function(type, bazaar) {
+        if (cart.length === 0) {
+          alert("Your cart is empty. Please add items to your cart before proceeding.");
+          return;
+        }
+        alert(`${type} selected for ${bazaar}. Continue?`);
         window.location.href = 'Delivery.html';
       }
   
